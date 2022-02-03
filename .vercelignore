@@ -1,0 +1,7 @@
+backend-terraform
+.github
+.circleci
+build
+node_modules
+.terraform
+*.tf

@@ -1,0 +1,101 @@
+name: "Build and Deploy Preview Environment"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  preview-environment:
+    name: "Build and Deploy Preview Environment"
+    runs-on: ubuntu-latest
+    env:
+      tfcWorkspaceName: hcup-be-'${{ github.head_ref }}'
+      tfcOrg: hashicorp-training
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Only set up preview environment for pull requests
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        if: github.event_name == 'pull_request'
+        with:
+          terraform_version: 1.1.0-beta1
+          cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
+          terraform_wrapper: false
+
+      # Update terraform.tf to default to single workspace
+      - name: Terraform Init, create TFC workspace
+        if: github.event_name == 'pull_request'
+        id: init-workspace
+        run: |
+          cd backend-terraform
+          sed -i 's/tags = \["hashicupsBackend"\]/name = "'$tfcWorkspaceName'"/g' terraform.tf
+          terraform init -input=false
+
+      # Builds and deploys backend + Vercel preview environments
+      - name: Build and deploy preview environment
+        if: github.event_name == 'pull_request' && github.event.pull_request.closed != true
+        id: build-deploy-preview-environment
+        run: |
+          cd backend-terraform
+          terraform apply --auto-approve
+
+      # Runs Terraform output to display the backend URL and Vercel preview URL
+      - name: Terraform Output
+        id: output
+        if: github.event_name == 'pull_request'  && github.event.pull_request.closed != true
+        run: terraform output -no-color
+        continue-on-error: true
+
+      # Creates comments on pull request with Terraform output
+      - uses: actions/github-script@0.9.0
+        if: github.event_name == 'pull_request' && github.event.pull_request.closed != true
+        env:
+          OUTPUT: "terraform\n${{ steps.output.outputs.stdout }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Preview Environment Outputs 🖌`
+            \`\`\`\n
+            ${process.env.OUTPUT}
+            \`\`\`
+
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+      # When user closes or merges pull request, this will destroy the resources then delete the TFC workspace
+      - name: Destroy preview environment
+        if: github.event.action == 'closed' && github.event.pull_request.closed == true
+        id: destroy-preview-environment
+        run: |
+          cd backend-terraform
+          terraform destroy --auto-approve
+          curl \ 
+            --header "Authorization: Bearer ${{ secrets.TFC_API_TOKEN }}" \
+            --header "Content-Type: application/vnd.api+json" \
+            --request DELETE \
+            https://app.terraform.io/api/v2/organizations/$tfcOrg/workspaces/$tfcWorkspaceName
+
+      # Builds and deploys production environment, similar to preview environment but isProd is set to true
+      # This builds the production environment and does not build any accompanying backend preview resources
+      - name: Build and deploy Prod Environment
+        id: build-deploy-prod-environment
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          cd backend-terraform
+          terraform apply --auto-approve -var="is_prod=true"
