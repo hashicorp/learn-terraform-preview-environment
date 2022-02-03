@@ -5,7 +5,7 @@ data "vercel_project_directory" "frontend" {
 }
 
 resource "vercel_deployment" "frontend" {
-  project_id = "prj_"
+  project_id = var.vercel_project
   files = data.vercel_project_directory.frontend.files
   production = var.is_prod
   environment = {
