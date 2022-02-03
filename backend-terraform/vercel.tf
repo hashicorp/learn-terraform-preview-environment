@@ -1,5 +1,3 @@
-provider "vercel" {}
-
 data "vercel_project_directory" "frontend" {
   path = "."
 }
