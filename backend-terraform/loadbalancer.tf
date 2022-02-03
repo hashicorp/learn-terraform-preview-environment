@@ -1,4 +1,5 @@
 resource "aws_lb" "app" {
+  count = var.is_prod ? 0 : 1
   name               = terraform.workspace
   internal           = false
   load_balancer_type = "application"
@@ -7,6 +8,7 @@ resource "aws_lb" "app" {
 }
 
 resource "aws_lb_listener" "app" {
+  count = var.is_prod ? 0 : 1
   load_balancer_arn = aws_lb.app.arn
   port              = "443"
   protocol          = "HTTPS"
@@ -20,6 +22,7 @@ resource "aws_lb_listener" "app" {
 }
 
 resource "aws_lb_target_group" "hashicups-backend" {
+  count = var.is_prod ? 0 : 1
   name     = terraform.workspace
   port     = 8080
   protocol = "HTTP"
@@ -34,6 +37,7 @@ resource "aws_lb_target_group" "hashicups-backend" {
 }
 
 resource "aws_lb_target_group_attachment" "hashicups-backend" {
+  count = var.is_prod ? 0 : 1
   target_group_arn = aws_lb_target_group.hashicups-backend.arn
   target_id        = aws_instance.hashicups-backend.id
   port             = 8080
