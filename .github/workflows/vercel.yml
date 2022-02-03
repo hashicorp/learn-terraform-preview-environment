@@ -34,6 +34,7 @@ jobs:
       # Update main.tf to default to single workspace
       - name: Terraform Init, create TFC workspace
         id: init-workspace
+        if: github.event_name == 'pull_request'
         run: |
           sed -i 's/tags = \["hashicupsBackend"\]/name = "'$tfcWorkspaceName'"/g' main.tf
           terraform init -input=false
