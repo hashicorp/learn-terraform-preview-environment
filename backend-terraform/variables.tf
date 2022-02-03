@@ -15,5 +15,5 @@ variable "is_prod" {
 
 variable "vercel_project" {
   description = "Vercel project ID"
-  default     = "prj_"
+  default     = "prj_
 }
