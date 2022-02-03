@@ -9,7 +9,7 @@ variable "region" {
 }
 
 variable "is_prod" {
-  description = "The region Terraform deploys your instance"
+  description = "If false, deploys preview environment EC2 and LB"
   default     = false
 }
 
