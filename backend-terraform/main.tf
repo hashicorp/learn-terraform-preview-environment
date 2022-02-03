@@ -34,7 +34,7 @@ data "template_file" "user_data" {
 }
 
 resource "aws_instance" "hashicups-backend" {
-  count = var.is_prod ? 0 : 1
+  count                       = var.is_prod ? 0 : 1
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.micro"
   subnet_id                   = data.terraform_remote_state.network.outputs.public_subnets[0]
