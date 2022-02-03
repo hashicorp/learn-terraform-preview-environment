@@ -40,14 +40,14 @@ jobs:
           terraform init -input=false
       # Builds and deploys backend + Vercel preview environments
       - name: Build and deploy preview environment
-        if: github.event_name == 'pull_request' && github.event.pull_request.closed != true
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         id: build-deploy-preview-environment
         run: |
           terraform apply --auto-approve
       # Runs Terraform output to display the backend URL and Vercel preview URL
       - name: Terraform Output
         id: output
-        if: github.event_name == 'pull_request' && github.event.pull_request.closed != true
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: |
           TF_OUTPUT=$(terraform output -no-color)
           TF_OUTPUT="${TF_OUTPUT//'%'/'%25'}"
@@ -57,7 +57,7 @@ jobs:
         continue-on-error: true
       # Creates comments on pull request with Terraform output
       - uses: actions/github-script@0.9.0
-        if: github.event_name == 'pull_request' && github.event.pull_request.closed != true
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         env:
           OUTPUT: "${{ steps.output.outputs.stdout }}"
         with:
@@ -80,11 +80,7 @@ jobs:
         id: destroy-preview-environment
         run: |
           terraform destroy --auto-approve
-          curl \ 
-            --header "Authorization: Bearer ${{ secrets.TFC_API_TOKEN }}" \
-            --header "Content-Type: application/vnd.api+json" \
-            --request DELETE \
-            https://app.terraform.io/api/v2/organizations/$tfcOrg/workspaces/$tfcWorkspaceName
+          curl --header "Authorization: Bearer ${{ secrets.TFC_API_TOKEN }}" --header "Content-Type: application/vnd.api+json" --request DELETE "https://app.terraform.io/api/v2/organizations/${tfcOrg}/workspaces/${tfcWorkspaceName}"
       # Builds and deploys production environment, similar to preview environment but isProd is set to true
       # This builds the production environment and does not build any accompanying backend preview resources
       - name: Build and deploy Prod Environment
