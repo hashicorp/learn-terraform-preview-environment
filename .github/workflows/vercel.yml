@@ -94,4 +94,5 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           sed -i 's/tags = \["hashicupsBackend"\]/name = "hcup-frontend-vercel"/g' main.tf
+          terraform init -input=false
           terraform apply --auto-approve -var="is_prod=true"
