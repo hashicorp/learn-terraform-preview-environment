@@ -1,6 +1,6 @@
 terraform {
   cloud {
-    hostname = "app.terraform.io"
+    hostname     = "app.terraform.io"
     organization = "hashicorp-training"
     workspaces {
       tags = ["hashicupsBackend"]
@@ -26,16 +26,16 @@ variable "vercel_project" {
 }
 
 module "backend" {
-  source  = "./backend-terraform"
+  source = "./backend-terraform"
 
   vercel_project = var.vercel_project
-  is_prod = var.is_prod
+  is_prod        = var.is_prod
 }
 
 output "lb_dns_name" {
-    value = module.backend.lb_dns_name
+  value = module.backend.lb_dns_name
 }
 
 output "preview_url" {
-    value = module.backend.preview_url
+  value = module.backend.preview_url
 } 
