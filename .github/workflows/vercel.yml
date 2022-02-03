@@ -93,6 +93,5 @@ jobs:
         id: build-deploy-prod-environment
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          cd backend-terraform
           sed -i 's/tags = \["hashicupsBackend"\]/name = "hcup-frontend-vercel"/g' main.tf
           terraform apply --auto-approve -var="is_prod=true"
