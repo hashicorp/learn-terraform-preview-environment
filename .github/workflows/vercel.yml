@@ -28,14 +28,11 @@ jobs:
       # Only set up preview environment for pull requests
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-        if: github.event_name == 'pull_request'
         with:
           cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
           terraform_wrapper: false
-
       # Update main.tf to default to single workspace
       - name: Terraform Init, create TFC workspace
-        if: github.event_name == 'pull_request'
         id: init-workspace
         run: |
           sed -i 's/tags = \["hashicupsBackend"\]/name = "'$tfcWorkspaceName'"/g' main.tf
@@ -49,7 +46,7 @@ jobs:
       # Runs Terraform output to display the backend URL and Vercel preview URL
       - name: Terraform Output
         id: output
-        if: github.event_name == 'pull_request'  && github.event.pull_request.closed != true
+        if: github.event_name == 'pull_request' && github.event.pull_request.closed != true
         run: |
           TF_OUTPUT=$(terraform output -no-color)
           TF_OUTPUT="${TF_OUTPUT//'%'/'%25'}"
@@ -57,7 +54,6 @@ jobs:
           TF_OUTPUT="${TF_OUTPUT//$'\r'/'%0D'}"
           echo "::set-output name=stdout::$TF_OUTPUT"
         continue-on-error: true
-
       # Creates comments on pull request with Terraform output
       - uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request' && github.event.pull_request.closed != true
