@@ -43,7 +43,8 @@ jobs:
           terraform output -no-color
         continue-on-error: true
       # Creates comments on pull request with Terraform output
-      - uses: actions/github-script@0.9.0
+      - name: Create comment with Terraform output
+        uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
         env:
           OUTPUT: "${{ steps.output.outputs.stdout }}"
