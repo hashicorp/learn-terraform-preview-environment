@@ -13,7 +13,7 @@ variable "is_prod" {
   default     = false
 }
 
-variable "vercel_project" {
-  description = "Vercel project ID"
-  default     = "prj_"
+variable "vercel_project_name" {
+  description = "Vercel project name"
+  default     = ""
 }

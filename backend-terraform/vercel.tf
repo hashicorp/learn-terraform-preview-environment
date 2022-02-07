@@ -1,3 +1,7 @@
+data "vercel_project" "fe" {
+  name = var.vercel_project_name
+}
+
 data "vercel_project_directory" "frontend" {
   path = "."
 }
@@ -7,7 +11,7 @@ locals {
 }
 
 resource "vercel_deployment" "frontend" {
-  project_id = var.vercel_project
+  project_id = data.vercel_project.fe.id
   files      = data.vercel_project_directory.frontend.files
   production = var.is_prod
   environment = {

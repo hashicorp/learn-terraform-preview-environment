@@ -10,7 +10,7 @@ terraform {
   required_providers {
     vercel = {
       source  = "vercel/vercel"
-      version = "0.0.1-alpha"
+      version = "0.1.0"
     }
   }
 }
@@ -20,15 +20,15 @@ variable "is_prod" {
   default     = false
 }
 
-variable "vercel_project" {
-  description = "Vercel project ID"
-  default     = "prj_WOtrW4nNEY5ma3jkTf9J30rsiFf0"
+variable "vercel_project_name" {
+  description = "Vercel project name"
+  default     = ""
 }
 
 module "backend" {
   source = "./backend-terraform"
 
-  vercel_project = var.vercel_project
+  vercel_project = var.vercel_project_name
   is_prod        = var.is_prod
 }
 
@@ -38,4 +38,4 @@ output "lb_dns_name" {
 
 output "preview_url" {
   value = module.backend.preview_url
-} 
+}
