@@ -17,8 +17,7 @@ users:
     groups: users, admin
     lock_passwd: false
     ssh_authorized_keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFnV+Xb3iPBXHIDhmMGUMibXoOp/RkRgQ3S3NDMrQMn3XKrDSIHrzofNnfRrdeikmLC7kcR7uloce+fb4b1a4jxwKWVgdcAOdTVvoevhr6wxTOMGCWOy+pXF4LISDutPhl6vl1sEV5E4qwB0ggFX7YOFDQF2LZCC9BG1GVqXUVGzGEf3nHXVjP71lT2LNPv91ApcDPZOIcKgtJne97pQhXIzGVzZ5tY2YfebEHvtZcSpEuLw9qvwshhTj8WTkFCiI/usy6uqitvF/fwVjcqHxk8RynIwLSxZqkjP9oqHbhMlD5eSLAdZwOF2Bcn8WWdfXGoHaYaAryytqIyvyk5Ie4w5Ctik3n7/8AGDkogGVxcwIHvbL4Io8krxTNCH0JuzcrxAp3bIoinCVTQfXFCMyIVOEVwZ9B5u9ErhUgtS9Gn/9vTZtKcC985dbPHLNNvgOfgmXS0BczrNiRgjfXaG/fcncDhtquOADN/xhVt/d52yiG4jYuKPI9M97/+SWpyVk= tu.nguyen@hashicups.com
-      # - ssh-rsa AAAAHHHHHH
+      - ssh-rsa AAAAHHHHHH
 
 # Clone repo and start hashicups backend
 runcmd:
