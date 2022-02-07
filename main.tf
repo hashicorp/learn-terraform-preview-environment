@@ -28,8 +28,8 @@ variable "vercel_project_name" {
 module "backend" {
   source = "./backend-terraform"
 
-  vercel_project = var.vercel_project_name
-  is_prod        = var.is_prod
+  vercel_project_name = var.vercel_project_name
+  is_prod             = var.is_prod
 }
 
 output "lb_dns_name" {
