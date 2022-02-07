@@ -22,7 +22,7 @@ variable "is_prod" {
 
 variable "vercel_project_name" {
   description = "Vercel project name"
-  default     = ""
+  default     = "learn-terraform-preview-environment"
 }
 
 module "backend" {
