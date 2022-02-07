@@ -22,7 +22,6 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
-          terraform_wrapper: false
       # Update main.tf to default to single workspace
       - name: Terraform Init, create TFC workspace
         id: init-workspace
@@ -41,11 +40,7 @@ jobs:
         id: output
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: |
-          TF_OUTPUT=$(terraform output -no-color)
-          TF_OUTPUT="${TF_OUTPUT//'%'/'%25'}"
-          TF_OUTPUT="${TF_OUTPUT//$'\n'/'%0A'}"
-          TF_OUTPUT="${TF_OUTPUT//$'\r'/'%0D'}"
-          echo "::set-output name=stdout::$TF_OUTPUT"
+          terraform output -no-color
         continue-on-error: true
       # Creates comments on pull request with Terraform output
       - uses: actions/github-script@0.9.0
