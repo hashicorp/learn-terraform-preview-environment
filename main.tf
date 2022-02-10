@@ -20,8 +20,8 @@ variable "is_prod" {
   default     = false
 }
 
-module "backend" {
-  source  = "./backend-terraform"
+module "preview-env" {
+  source  = "./preview-env"
   is_prod = var.is_prod
 }
 
