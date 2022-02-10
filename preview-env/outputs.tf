@@ -3,7 +3,7 @@ output "lb_dns_name" {
 }
 
 output "public_ip" {
-  value = length(aws_instance.hashicups-backend) > 0 ? "https:://${aws_instance.hashicups-backend[0].public_ip} : ""
+  value = length(aws_instance.hashicups-backend) > 0 ? "https:://${aws_instance.hashicups-backend[0].public_ip}" : ""
 }
 
 output "preview_url" {
