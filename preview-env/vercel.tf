@@ -1,7 +1,3 @@
-data "vercel_project" "fe" {
-  name = var.vercel_project_name
-}
-
 data "vercel_project_directory" "frontend" {
   path = "."
 }
