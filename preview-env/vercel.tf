@@ -11,7 +11,7 @@ locals {
 }
 
 resource "vercel_deployment" "frontend" {
-  project_id = data.vercel_project.fe.id
+  project_id = data.terraform_remote_state.shared.outputs.vercel_project_id
   files      = data.vercel_project_directory.frontend.files
   production = var.is_prod
   environment = {

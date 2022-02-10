@@ -3,8 +3,8 @@ resource "aws_lb" "app" {
   name               = terraform.workspace
   internal           = false
   load_balancer_type = "application"
-  subnets            = data.terraform_remote_state.network.outputs.public_subnets
-  security_groups    = [data.terraform_remote_state.network.outputs.hashicups_security_group_id]
+  subnets            = data.terraform_remote_state.shared.outputs.public_subnets
+  security_groups    = [data.terraform_remote_state.shared.outputs.hashicups_security_group_id]
 }
 
 resource "aws_lb_listener" "app" {
@@ -13,7 +13,7 @@ resource "aws_lb_listener" "app" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = data.terraform_remote_state.network.outputs.ssl_cert_arn
+  certificate_arn   = data.terraform_remote_state.shared.outputs.ssl_cert_arn
 
   default_action {
     type             = "forward"
@@ -26,7 +26,7 @@ resource "aws_lb_target_group" "hashicups-backend" {
   name     = terraform.workspace
   port     = 8080
   protocol = "HTTP"
-  vpc_id   = data.terraform_remote_state.network.outputs.vpc_id
+  vpc_id   = data.terraform_remote_state.shared.outputs.vpc_id
 
   health_check {
     port     = 8080

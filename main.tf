@@ -20,16 +20,9 @@ variable "is_prod" {
   default     = false
 }
 
-variable "vercel_project_name" {
-  description = "Vercel project name"
-  default     = "learn-terraform-preview-environment"
-}
-
 module "backend" {
-  source = "./backend-terraform"
-
-  vercel_project_name = var.vercel_project_name
-  is_prod             = var.is_prod
+  source  = "./backend-terraform"
+  is_prod = var.is_prod
 }
 
 output "lb_dns_name" {

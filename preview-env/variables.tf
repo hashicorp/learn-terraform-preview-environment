@@ -12,8 +12,3 @@ variable "is_prod" {
   description = "If false, deploys preview environment EC2 and LB"
   default     = false
 }
-
-variable "vercel_project_name" {
-  description = "Vercel project name"
-  default     = ""
-}
