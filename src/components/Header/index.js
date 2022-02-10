@@ -154,7 +154,7 @@ export const Header = ({ loading }) => {
                     </g>
                 </svg>
             </Logo>
-              HashiCups
+              HashiCups #2
             <Overlay />
         </Container>
     )
