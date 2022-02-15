@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  background: #F8F8F8;
+}
+
+html .dark body, .dark body {
+  background: #171717;
+}
+
+.icon-green {
+  filter: invert(60%) sepia(38%) saturate(5616%) hue-rotate(55deg) brightness(95%) contrast(101%);
+}
+
+.icon-red {
+  filter: invert(17%) sepia(42%) saturate(7010%) hue-rotate(3deg) brightness(110%) contrast(132%);
+}
+
+.shimmer {
+  animation: shimmer-move 2s ease infinite;
+}
+
+.scroll-style {
+  background-clip: border-box;
+}
+
+.scroll-style::-webkit-scrollbar {
+  width: 29px;
+  height: 29px;
+  background: transparent;
+}
+
+.scroll-style::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-style::-webkit-scrollbar-thumb {
+  border: 12px solid transparent;
+  background: #d4d4d4;
+  border-radius: 32px;
+  background-clip: content-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  .scroll-style::-webkit-scrollbar-thumb {
+    background: #737373;
+    background-clip: content-box;
+  }
+}
+
+@keyframes shimmer-move {
+  0% {
+    transform:translateX(-200%)
+  }
+
+  to {
+    transform:translateX(200%)
+  }
+}
