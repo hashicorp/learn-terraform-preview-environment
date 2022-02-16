@@ -11,6 +11,8 @@ const httpLink = createHttpLink({
   uri: `${publicApiUrl}/api`,
 })
 
+console.log(`API: ${publicApiUrl}`)
+
 const authLink = setContext((_, { headers }) => {
   const token = JSON.parse(localStorage.getItem('token'))
   return {
