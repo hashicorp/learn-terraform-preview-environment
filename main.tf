@@ -20,15 +20,15 @@ variable "is_prod" {
   default     = false
 }
 
-module "preview-env" {
+module "preview_env" {
   source  = "./preview-env"
   is_prod = var.is_prod
 }
 
 output "lb_dns_name" {
-  value = module.backend.lb_dns_name
+  value = module.preview_env.lb_dns_name
 }
 
 output "preview_url" {
-  value = module.backend.preview_url
+  value = module.preview_env.preview_url
 }
