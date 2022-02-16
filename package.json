@@ -3,7 +3,6 @@
   "scripts": {
     "dev": "next dev -p 4001",
     "build": "next build",
-    "export": "next build && next export",
     "start": "next start -p 4001"
   },
   "dependencies": {

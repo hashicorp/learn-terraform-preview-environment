@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import { useDarkMode } from 'next-dark-mode'
 import Image from 'next/image'
-import imageLoader from '../../loader'
+
 
 import MonitorIcon from '@hashicorp/flight-icons/svg/monitor-16.svg'
 import SunIcon from '@hashicorp/flight-icons/svg/sun-16.svg'
@@ -83,7 +83,7 @@ export default function Theme() {
         onClick={() => showSettings()}
       >
         <span className="flex items-center flex-shrink-0 dark:invert">
-          <Image src={(theme == 'light' || theme == 'autoLight') ? SunIcon : (theme == 'dark' || theme == 'autoDark') ? MoonIcon : MonitorIcon} loader={imageLoader} unoptimized />
+          <Image src={(theme == 'light' || theme == 'autoLight') ? SunIcon : (theme == 'dark' || theme == 'autoDark') ? MoonIcon : MonitorIcon} />
         </span>
         <span className="text-black/75 dark:text-white/75">
           {theme == 'light' && (
@@ -97,7 +97,7 @@ export default function Theme() {
           )}
         </span>
         <span className="flex items-center flex-shrink-0 opacity-75 dark:invert">
-          <Image src={CaretIcon} loader={imageLoader} unoptimized />
+          <Image src={CaretIcon} />
         </span>
       </button>
 
@@ -134,9 +134,9 @@ function ThemeButton(props) {
 
   return (
     <button className="flex items-center space-x-2 py-1 px-3 text-black/75 dark:text-white/75 bg-gray-100/0 hover:bg-gray-100 dark:bg-white/0 dark:hover:bg-white/5 transition duration-300 ease-in-out rounded">
-      <span className="flex items-center flex-shrink-0 dark:invert opacity-75"><Image src={props.icon} loader={imageLoader} unoptimized /></span>
+      <span className="flex items-center flex-shrink-0 dark:invert opacity-75"><Image src={props.icon} /></span>
       <span className="flex-1 text-left text-sm">{props.label}</span>
-      <span className="flex items-center flex-shrink-0 w-4 h-4 opacity-75 scale-90 translate-x-[4px] dark:invert">{isActive && <Image src={CheckIcon} loader={imageLoader} unoptimized />}</span>
+      <span className="flex items-center flex-shrink-0 w-4 h-4 opacity-75 scale-90 translate-x-[4px] dark:invert">{isActive && <Image src={CheckIcon} />}</span>
     </button>
   )
 }

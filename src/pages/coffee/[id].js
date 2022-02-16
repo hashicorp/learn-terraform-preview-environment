@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import NumberFormat from 'react-number-format'
-import imageLoader from '../../../loader'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
@@ -67,14 +66,14 @@ export default function Coffee(props) {
       coffee: coffee,
       quantity: amount,
     }
-    
+
     // Refreshes cart
-    props.setCart({...props.cart});
+    props.setCart({ ...props.cart });
 
     // Show cart
     props.setCartVisible(true)
   };
-  
+
   useEffect(() => {
     setAmount(1)
   }, [router.asPath])
@@ -103,7 +102,7 @@ export default function Coffee(props) {
                     <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight capitalize sm:truncate">{coffee.name}</h1>
                     <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">{coffee.teaser}</p>
                   </div>
-  
+
                   <div className="flex flex-col md:px-8">
                     <dl className="grid sm:grid-cols-3">
                       <dt className="text-black/75 dark:text-white/75 text-sm sm:border-b border-gray-200 dark:border-white/10 sm:py-2 pt-2 sm:pt-3">Collection</dt>
@@ -137,7 +136,7 @@ export default function Coffee(props) {
             <div className="flex items-center justify-center w-full">
               {error ? (
                 <div className="flex flex-col items-center justify-center text-black/75 dark:text-white/75 h-full min-h-[280px]">
-                  <Image src={ErrorIcon} className="opacity-50 dark:invert" loader={imageLoader} unoptimized />
+                  <Image src={ErrorIcon} className="opacity-50 dark:invert" />
                   <h4 className="mt-4">Unable to query the selected coffee.</h4>
                   <p className="text-sm opacity-75">Check the console for error messages.</p>
                 </div>
@@ -163,7 +162,7 @@ export default function Coffee(props) {
 
 function CountButton(props) {
   return (
-    <button onClick={props.action} className={`${props.disabled ? 'opacity-0 pointer-events-none' : 'opacity-50 hover:opacity-75 active:opacity-100'} flex items-center px-3 select-none flex-shrink-0 transition dark:invert`}><Image src={props.icon} loader={imageLoader} unoptimized /></button>
+    <button onClick={props.action} className={`${props.disabled ? 'opacity-0 pointer-events-none' : 'opacity-50 hover:opacity-75 active:opacity-100'} flex items-center px-3 select-none flex-shrink-0 transition dark:invert`}><Image src={props.icon} /></button>
   )
 }
 
@@ -182,7 +181,7 @@ function PrevCoffee(props) {
   return (
     <div className="hidden 2xl:flex flex-1 flex-col items-center justify-center relative -mx-8 h-full overflow-hidden">
       {coffee ? (
-        <HoverLink id={prev_id} image={coffee.image} icon={PrevIcon} direction="prev" loader={imageLoader} unoptimized />
+        <HoverLink id={prev_id} image={coffee.image} icon={PrevIcon} direction="prev" />
       ) : (
         <div />
       )}
@@ -205,7 +204,7 @@ function NextCoffee(props) {
   return (
     <div className="hidden 2xl:flex flex-1 flex-col items-center justify-center relative -mx-8 h-full overflow-hidden">
       {coffee ? (
-        <HoverLink id={next_id} image={coffee.image} icon={NextIcon} direction="next" loader={imageLoader} unoptimized />
+        <HoverLink id={next_id} image={coffee.image} icon={NextIcon} direction="next" />
       ) : (
         <div></div>
       )}
@@ -218,7 +217,7 @@ function HoverLink(props) {
     <Link href={`/coffee/${props.id}`} scroll={false}>
       <a className="relative group">
         <span className={`${props.direction == 'next' ? 'translate-x-[-10px]' : 'translate-x-[10px]'} absolute left-1/2 top-1/2 w-16 h-16 -ml-8 -mt-8 flex items-center justify-center bg-black/75 backdrop-blur-md shadow-high rounded-full opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 group-hover:translate-x-0 z-20 transition duration-500 ease-in-out`}>
-          <Image src={props.icon} className="invert" loader={imageLoader} unoptimized />
+          <Image src={props.icon} className="invert" />
         </span>
         <img className="relative max-w-min transition duration-500 ease-in-out opacity-50 group-hover:opacity-75" src={`/images${props.image}`} width={640} height={640} />
       </a>

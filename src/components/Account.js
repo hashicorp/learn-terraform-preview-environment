@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import NumberFormat from 'react-number-format'
-import imageLoader from '../../loader'
 
 import Field from 'components/Field'
 import Orders from 'components/Orders'
@@ -114,14 +113,14 @@ export default function Account(props) {
       setErrorMessages([err])
     })
   };
-  
+
   useEffect(() => {
     if (username != "" && password != '') {
       setSignInFieldsComplete(true)
     } else {
       setSignInFieldsComplete(false)
     }
-    
+
     if (username != "" && password != '' && confirmPassword != '') {
       setSignUpFieldsComplete(true)
     } else {
@@ -144,7 +143,7 @@ export default function Account(props) {
             <>
               <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Your account</h1>
               <div className="flex items-center justify-between">
-                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" loader={imageLoader} unoptimized /></span> <b>{props.username}</b></p>
+                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span> <b>{props.username}</b></p>
                 <button onClick={signOut} className="relative whitespace-nowrap text-black/50 dark:text-white/50 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 -mx-1 uppercase text-[11px] tracking-widest text-center transition">Sign out</button>
               </div>
             </>
@@ -173,7 +172,7 @@ export default function Account(props) {
             <form onSubmit={signIn}>
               {hasErrors && errorMessages.map((error, index) => (
                 <div key={index} className="flex items-center bg-red-600/90 border border-red-600 rounded-lg px-3 py-2 space-x-2">
-                  <span className="flex items-center invert opacity-75 flex-shrink-0"><Image src={ErrorIcon} loader={imageLoader} unoptimized /></span>
+                  <span className="flex items-center invert opacity-75 flex-shrink-0"><Image src={ErrorIcon} /></span>
                   <p className="text-sm text-white/90">{error.message}</p>
                 </div>
               ))}

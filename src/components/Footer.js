@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import imageLoader from '../../loader'
 
 import Theme from 'components/Theme'
 
@@ -45,7 +44,7 @@ function ExternalLink(props) {
     <li className="flex flex-auto">
       <Link href={props.url}>
         <a className="flex items-center space-x-2 flex-1 px-8 py-6 bg-white dark:bg-black/30 hover:bg-gray-50 dark:hover:bg-black/20 dark:text-white/90 transition ease-in-out">
-          <span className="flex items-center opacity-75 flex-shrink-0 dark:invert"><Image src={props.icon} loader={imageLoader} unoptimized /></span>
+          <span className="flex items-center opacity-75 flex-shrink-0 dark:invert"><Image src={props.icon} /></span>
           <span>{props.label}</span>
         </a>
       </Link>

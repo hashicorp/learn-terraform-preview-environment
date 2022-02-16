@@ -6,7 +6,6 @@ import { ALL_COFFEES_QUERY } from 'gql/gqlQueries';
 import useSWR from 'swr'
 import Link from 'next/link'
 import Image from 'next/image'
-import imageLoader from '../../loader';
 
 import ErrorIcon from '@hashicorp/flight-icons/svg/alert-triangle-24.svg'
 
@@ -50,7 +49,7 @@ export default function CoffeeMenu(props) {
             <div className="flex items-center justify-center py-12">
               {error ? (
                 <div className="flex flex-col items-center text-black/75 dark:text-white/75">
-                  <Image src={ErrorIcon} className="opacity-50 dark:invert" loader={imageLoader} unoptimized />
+                  <Image src={ErrorIcon} className="opacity-50 dark:invert" />
                   <h4 className="mt-4">Unable to query all coffees.</h4>
                   <p className="text-sm opacity-75">Check the console for error messages.</p>
                 </div>
@@ -76,7 +75,7 @@ export default function CoffeeMenu(props) {
             <div className="flex items-center h-[180px]">
               {error ? (
                 <div className="flex flex-col items-center text-black/75 dark:text-white/75">
-                  <Image src={ErrorIcon} className="opacity-50 dark:invert" loader={imageLoader} unoptimized />
+                  <Image src={ErrorIcon} className="opacity-50 dark:invert" />
                   <h4 className="mt-4">Unable to query all coffees.</h4>
                   <p className="text-sm opacity-75">Check the console for error messages.</p>
                 </div>

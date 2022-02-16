@@ -4,27 +4,25 @@ import NumberFormat from 'react-number-format'
 
 import CheckoutButton from 'components/CheckoutButton'
 
-import imageLoader from '../../loader'
-
 import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-16.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-16.svg'
 
 export default function Cart(props) {
-  const removeItemFromCart = (coffeeID) => {   
+  const removeItemFromCart = (coffeeID) => {
     delete props.cart[coffeeID]
-    
+
     if (props.onRemoveItem != undefined) {
       props.onRemoveItem()
     }
-    
+
     if (props.isSticky && Object.keys(props.cart).length === 0) {
       props.setCartVisible(false)
     }
 
     // Refreshes cart
-    props.setCart({...props.cart})
+    props.setCart({ ...props.cart })
   };
-  
+
   return (
     <>
       {props.isSticky ? (
