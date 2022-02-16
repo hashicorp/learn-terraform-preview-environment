@@ -3,8 +3,8 @@ import { setContext } from '@apollo/client/link/context';
 
 let publicApiUrl = "http://localhost:8080"
 
-if (process.env.REACT_APP_PUBLIC_API_URL) {
-  publicApiUrl = process.env.REACT_APP_PUBLIC_API_URL
+if (process.env.NEXT_PUBLIC_PUBLIC_API_URL) {
+  publicApiUrl = process.env.NEXT_PUBLIC_PUBLIC_API_URL
 }
 
 const httpLink = createHttpLink({
