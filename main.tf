@@ -3,7 +3,6 @@ terraform {
     hostname     = "app.terraform.io"
     organization = "Sample-ORG7565"
     workspaces {
-      name = "hcup-be-shared"
       tags = ["hashicupsBackend"]
     }
   }
