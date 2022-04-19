@@ -59,7 +59,7 @@ export default function Header(props) {
         <div className="absolute left-0 top-0">
           <Image src="/images/demo.svg" height={88} width={88} />
         </div>
-        <h1 class="font-bold py-4">HashiCups #2</h1>
+        <h1 class="font-bold py-4">HashiCups #3</h1>
         
       </header>
 
