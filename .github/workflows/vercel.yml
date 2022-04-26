@@ -29,6 +29,7 @@ jobs:
         run: |
           sed -i 's/tags = \["hashicupsBackend"\]/name = "'$tfcWorkspaceName'"/g' main.tf
           terraform login
+          yes
           terraform init -input=false
       # Builds and deploys backend + Vercel preview environments
       - name: Build and deploy preview environment
@@ -78,5 +79,6 @@ jobs:
         run: |
           sed -i 's/tags = \["hashicupsBackend"\]/name = "hcup-frontend-vercel"/g' main.tf
           terraform login
+          yes
           terraform init -input=false
           terraform apply --auto-approve -var="is_prod=true"
