@@ -1,4 +1,4 @@
-name: "Build and Deploy Preview Environment"
+name: 'Build and Deploy Preview Environment'
 
 on:
   push:
@@ -9,11 +9,11 @@ on:
 
 jobs:
   preview-environment:
-    name: "Build and Deploy Preview Environment"
+    name: 'Build and Deploy Preview Environment'
     runs-on: ubuntu-latest
     env:
       tfcWorkspaceName: hcup-be-${{ github.head_ref }}
-      tfcOrg: hashicorp-training
+      tfcOrg: bluemagma
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -47,7 +47,7 @@ jobs:
         uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
         env:
-          OUTPUT: "${{ steps.output.outputs.stdout }}"
+          OUTPUT: '${{ steps.output.outputs.stdout }}'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
