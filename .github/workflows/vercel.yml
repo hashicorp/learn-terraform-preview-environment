@@ -27,7 +27,7 @@ jobs:
         id: init-workspace
         if: github.event_name == 'pull_request'
         run: |
-          sed -i 's/tags = \["d8-hashicupsBackend"\]/name = "'$tfcWorkspaceName'"/g' main.tf
+          sed -i 's/tags = \["hashicupsBackend"\]/name = "'$tfcWorkspaceName'"/g' main.tf
           terraform init -input=false
       # Builds and deploys backend + Vercel preview environments
       - name: Build and deploy preview environment
@@ -75,6 +75,6 @@ jobs:
         id: build-deploy-prod-environment
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          sed -i 's/tags = \["d8-hashicupsBackend"\]/name = "hcup-frontend-vercel"/g' main.tf
+          sed -i 's/tags = \["hashicupsBackend"\]/name = "hcup-frontend-vercel"/g' main.tf
           terraform init -input=false
           terraform apply --auto-approve -var="is_prod=true"
