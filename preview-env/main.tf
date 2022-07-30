@@ -6,7 +6,7 @@ data "terraform_remote_state" "shared" {
   backend = "remote"
 
   config = {
-    organization = "hashicorp-training"
+    organization = "devops8-hashicorp-learn"
     workspaces = {
       name = "hcup-be-shared"
     }
@@ -33,7 +33,7 @@ data "template_file" "user_data" {
   template = file("${path.module}/setup-hashicups.yaml")
 }
 
-resource "aws_instance" "hashicups-backend" {
+resource "aws_instance" "d8-hashicups-backend" {
   count                       = var.is_prod ? 0 : 1
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.micro"
