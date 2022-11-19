@@ -15,7 +15,7 @@ export default function Header(props) {
   return (
     <>
       <Head>
-        <title>HashiCups - Demo App</title>
+        <title>HashiCups !!Demo!! App</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           href={`/favicon-120.png`}
