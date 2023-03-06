@@ -10,6 +10,8 @@ on:
 jobs:
   preview-environment:
     name: "Build and Deploy Preview Environment"
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     env:
       tfcWorkspaceName: hcup-be-${{ github.head_ref }}
