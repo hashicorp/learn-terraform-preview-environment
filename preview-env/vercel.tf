@@ -5,7 +5,7 @@ data "vercel_project_directory" "frontend" {
 locals {
   public_api_url = length(aws_lb.app) > 0 ? "https://${aws_lb.app[0].dns_name}" : ""
 }
-
+ # create the deployment 
 resource "vercel_deployment" "frontend" {
   project_id = data.terraform_remote_state.shared.outputs.vercel_project_id
   files      = data.vercel_project_directory.frontend.files

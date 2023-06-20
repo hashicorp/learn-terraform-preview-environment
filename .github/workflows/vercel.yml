@@ -29,20 +29,20 @@ jobs:
         run: |
           sed -i 's/tags = \["hashicupsBackend"\]/name = "'$tfcWorkspaceName'"/g' main.tf
           terraform init -input=false
-      # Builds and deploys backend + Vercel preview environments
+      # Builds and deploys backend and Vercel preview environments
       - name: Build and deploy preview environment
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
         id: build-deploy-preview-environment
         run: |
           terraform apply --auto-approve
-      # Runs Terraform output to display the backend URL and Vercel preview URL
+      # Runs Terraform outputs to display the backend URL and Vercel preview URL
       - name: Terraform Output
         id: output
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: |
           terraform output -no-color
         continue-on-error: true
-      # Creates comments on pull request with Terraform output
+      # Creates comments on pull request with Terraform outputs
       - name: Create comment with Terraform output
         uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request' && github.event.action != 'closed'

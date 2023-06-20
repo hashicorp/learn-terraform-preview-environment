@@ -16,7 +16,7 @@ terraform {
 }
 
 variable "is_prod" {
-  description = "If false, deploys preview environment EC2 and LB"
+  description = "If false, deploys preview environment EC2 and LBalancer"
   default     = false
 }
 
