@@ -42,7 +42,7 @@ jobs:
         run: |
           terraform output -no-color
         continue-on-error: true
-      # Creates comments on pull request with Terraform outputs
+      # Creates comments on pulls request with Terraform outputs
       - name: Create comment with Terraform output
         uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
@@ -69,8 +69,8 @@ jobs:
         run: |
           terraform destroy --auto-approve
           curl --header "Authorization: Bearer ${{ secrets.TFC_API_TOKEN }}" --header "Content-Type: application/vnd.api+json" --request DELETE "https://app.terraform.io/api/v2/organizations/${tfcOrg}/workspaces/${tfcWorkspaceName}"
-      # Builds and deploys production environment, similar to preview environment but isProd is set to true
-      # This builds the production environment and does not build any accompanying backend preview resources
+      # Builds and deploys production environments, similar to preview environment but isProd is set to true
+      # This builds the productions environments and does not build any accompanying backend preview resources
       - name: Build and deploy Prod Environment
         id: build-deploy-prod-environment
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
