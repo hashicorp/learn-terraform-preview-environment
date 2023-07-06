@@ -8,7 +8,7 @@ data "terraform_remote_state" "shared" {
   config = {
     organization = "hashicorp-training"
     workspaces = {
-      name = "hcup-be-shared"
+      name = "hcup-shared-resources"
     }
   }
 }
