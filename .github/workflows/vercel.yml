@@ -23,13 +23,18 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
-      # Update main.tf to default to single workspace, create the workspace and assign to project
+      # Create TFC workspace if opening pull request
+      - name: Create TFC workspace for prev env
+        id: create-workspace
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
+        run: |
+          curl --header "Authorization: Bearer ${{ secrets.TFC_API_TOKEN }}" --header "Content-Type: application/vnd.api+json" --request POST --data '{"data": {"type": "workspaces","attributes": {"name": "${tfcWorkspaceName}"},"relationships": {"project": {"data": {"type": "projects","id": "${tfcProjectId}"}}}}}' https://app.terraform.io/api/v2/organizations/${tfcOrg}/workspaces
+      # Update main.tf to default to single workspace
       - name: Terraform Init, create TFC workspace
         id: init-workspace
         if: github.event_name == 'pull_request'
         run: |
           sed -i 's/tags = \["hashicupsBackend"\]/name = "'$tfcWorkspaceName'"/g' main.tf
-          curl --header "Authorization: Bearer ${{ secrets.TFC_API_TOKEN }}" --header "Content-Type: application/vnd.api+json" --request POST --data '{"data": {"type": "workspaces","attributes": {"name": "${tfcWorkspaceName}"},"relationships": {"project": {"data": {"type": "projects","id": "${tfcProjectId}"}}}}}' https://app.terraform.io/api/v2/organizations/${tfcOrg}/workspaces
           terraform init -input=false
       # Builds and deploys backend + Vercel preview environments
       - name: Build and deploy preview environment
