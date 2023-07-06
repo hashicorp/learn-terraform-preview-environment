@@ -11,6 +11,6 @@ resource "vercel_deployment" "frontend" {
   files      = data.vercel_project_directory.frontend.files
   production = var.is_prod
   environment = {
-    NEXT_PUBLIC_PUBLIC_API_URL = var.is_prod ? "" : local.public_api_url
+    NEXT_PUBLIC_PUBLIC_API_URL = var.is_prod ? "https://hashicups-production-url.com" : local.public_api_url
   }
 }
