@@ -13,6 +13,7 @@ data "terraform_remote_state" "shared" {
   }
 }
 
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
