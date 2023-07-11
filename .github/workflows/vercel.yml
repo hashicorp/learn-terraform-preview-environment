@@ -69,12 +69,17 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
-      # When user closes or merges pull request, this will destroy the resources then delete the TFC workspace
+      # When user closes or merges pull request, this will destroy the preview environment resources
       - name: Destroy preview environment
         if: github.event.action == 'closed'
         id: destroy-preview-environment
         run: |
           terraform destroy --auto-approve
+      # When user closes or merges pull request, this will delete the TFC workspace for the preview environment 
+      - name: Delete preview environment workspace
+        if: github.event.action == 'closed'
+        id: delete-preview-environment
+        run: |
           curl --header "Authorization: Bearer ${{ secrets.TFC_API_TOKEN }}" --header "Content-Type: application/vnd.api+json" --request DELETE "https://app.terraform.io/api/v2/organizations/${tfcOrg}/workspaces/${tfcWorkspaceName}"
       # Builds and deploys production environment, similar to preview environment but isProd is set to true
       # This builds the production environment and does not build any accompanying backend preview resources
