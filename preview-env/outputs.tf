@@ -7,5 +7,5 @@ output "public_ip" {
 }
 
 output "preview_url" {
-  value = vercel-deployment.frontend.url
+  value = vercel_deployment.frontend.url
 }
