@@ -6,7 +6,7 @@ data "terraform_remote_state" "shared" {
   backend = "remote"
 
   config = {
-    organization = "chronoly"
+    organization = "example-org-f23702"
     workspaces = {
       name = "hcup-be-shared"
     }
