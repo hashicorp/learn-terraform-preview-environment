@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 output "lb_dns_name" {
   value = length(aws_lb.app) > 0 ? "https://${aws_lb.app[0].dns_name}" : ""
 }

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import useSWR from 'swr'
 import Link from 'next/link'
 import Image from 'next/image'
