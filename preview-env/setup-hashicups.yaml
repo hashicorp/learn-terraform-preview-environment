@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 #cloud-config
 # Add groups to the system
 # Adds the ubuntu group with members 'root' and 'sys'

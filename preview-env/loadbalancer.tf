@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 resource "aws_lb" "app" {
   count              = var.is_prod ? 0 : 1
   name               = terraform.workspace

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'

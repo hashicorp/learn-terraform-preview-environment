@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import gql from 'graphql-tag';
 
 const ALL_COFFEES_QUERY = gql`
