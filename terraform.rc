@@ -1,0 +1,3 @@
+credentials "app.terraform.io" {
+  token = "O3yumvjFABeKJQ.atlasv1.jYdzNU1OyWHW6ZPdtrgycdj2vE5pw4b9J8pNEDOHd0yOqJ3uuGY6zBV9g52VlPazDDY"
+}
