@@ -6,7 +6,7 @@ data "terraform_remote_state" "shared" {
   backend = "remote"
 
   config = {
-    organization = "hashicorp-training"
+    organization = "pyther-organization"
     workspaces = {
       name = "hcup-be-shared"
     }
@@ -26,7 +26,7 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"] # Canonical
+  owners = ["099720109477"] # Canonicals
 }
 
 data "template_file" "user_data" {

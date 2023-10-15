@@ -1,7 +1,7 @@
 terraform {
   cloud {
     hostname     = "app.terraform.io"
-    organization = "hashicorp-training"
+    organization = "pyther-organization"
     workspaces {
       tags = ["hashicupsBackend"]
     }
@@ -16,7 +16,7 @@ terraform {
 }
 
 variable "is_prod" {
-  description = "If false, deploys preview environment EC2 and LB"
+  description = "If false, deploys preview environment EC2 and Load Balancer"
   default     = false
 }
 

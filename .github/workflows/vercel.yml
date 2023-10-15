@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       tfcWorkspaceName: hcup-be-${{ github.head_ref }}
-      tfcOrg: hashicorp-training
+      tfcOrg: pyther-organization
     steps:
       - name: Checkout
         uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
@@ -29,20 +29,20 @@ jobs:
         run: |
           sed -i 's/tags = \["hashicupsBackend"\]/name = "'$tfcWorkspaceName'"/g' main.tf
           terraform init -input=false
-      # Builds and deploys backend + Vercel preview environments
+      # Builds and deploys backend and Vercel preview environments
       - name: Build and deploy preview environment
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
         id: build-deploy-preview-environment
         run: |
           terraform apply --auto-approve
-      # Runs Terraform output to display the backend URL and Vercel preview URL
+      # Runs Terraform outputs to display the backend URL and Vercel preview URL
       - name: Terraform Output
         id: output
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: |
           terraform output -no-color
         continue-on-error: true
-      # Creates comments on pull request with Terraform output
+      # Creates comments on pulls request with Terraform outputs
       - name: Create comment with Terraform output
         uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
@@ -69,8 +69,8 @@ jobs:
         run: |
           terraform destroy --auto-approve
           curl --header "Authorization: Bearer ${{ secrets.TFC_API_TOKEN }}" --header "Content-Type: application/vnd.api+json" --request DELETE "https://app.terraform.io/api/v2/organizations/${tfcOrg}/workspaces/${tfcWorkspaceName}"
-      # Builds and deploys production environment, similar to preview environment but isProd is set to true
-      # This builds the production environment and does not build any accompanying backend preview resources
+      # Builds and deploys production environments, similar to preview environment but isProd is set to true
+      # This builds the productions environments and does not build any accompanying backend preview resources
       - name: Build and deploy Prod Environment
         id: build-deploy-prod-environment
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
