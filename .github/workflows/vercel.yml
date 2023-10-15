@@ -12,8 +12,9 @@ jobs:
     name: "Build and Deploy Preview Environment"
     runs-on: ubuntu-latest
     env:
-      tfcWorkspaceName: hcup-be-${{ github.head_ref }}
-      tfcOrg: hashicorp-training
+      tfcWorkspaceName: hcup-prev-env-${{ github.head_ref }}
+      tfcOrg: jacobbuckles-org
+      tfcProjectId: prj-EQUdn5M1Hcn6u1nr
     steps:
       - name: Checkout
         uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
@@ -22,6 +23,12 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
+      # Create TFC workspace if opening pull request
+      - name: Create TFC workspace for prev env
+        id: create-workspace
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
+        run: |
+          curl --header "Authorization: Bearer ${{ secrets.TFC_API_TOKEN }}" --header "Content-Type: application/vnd.api+json" --request POST --data '{"data": {"type": "workspaces","attributes": {"name": "'"${tfcWorkspaceName}"'"},"relationships": {"project": {"data": {"type": "projects","id": "'"${tfcProjectId}"'"}}}}}' https://app.terraform.io/api/v2/organizations/${tfcOrg}/workspaces
       # Update main.tf to default to single workspace
       - name: Terraform Init, create TFC workspace
         id: init-workspace
@@ -62,12 +69,17 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
-      # When user closes or merges pull request, this will destroy the resources then delete the TFC workspace
+      # When user closes or merges pull request, this will destroy the preview environment resources
       - name: Destroy preview environment
         if: github.event.action == 'closed'
         id: destroy-preview-environment
         run: |
           terraform destroy --auto-approve
+      # When user closes or merges pull request, this will delete the TFC workspace for the preview environment 
+      - name: Delete preview environment workspace
+        if: github.event.action == 'closed'
+        id: delete-preview-environment
+        run: |
           curl --header "Authorization: Bearer ${{ secrets.TFC_API_TOKEN }}" --header "Content-Type: application/vnd.api+json" --request DELETE "https://app.terraform.io/api/v2/organizations/${tfcOrg}/workspaces/${tfcWorkspaceName}"
       # Builds and deploys production environment, similar to preview environment but isProd is set to true
       # This builds the production environment and does not build any accompanying backend preview resources
@@ -75,6 +87,6 @@ jobs:
         id: build-deploy-prod-environment
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          sed -i 's/tags = \["hashicupsBackend"\]/name = "hcup-frontend-vercel"/g' main.tf
+          sed -i 's/tags = \["hashicupsBackend"\]/name = "hcup-frontend-prod"/g' main.tf
           terraform init -input=false
           terraform apply --auto-approve -var="is_prod=true"

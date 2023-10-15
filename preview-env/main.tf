@@ -6,12 +6,13 @@ data "terraform_remote_state" "shared" {
   backend = "remote"
 
   config = {
-    organization = "hashicorp-training"
+    organization = "jacobbuckles-org"
     workspaces = {
-      name = "hcup-be-shared"
+      name = "hcup-shared-resources"
     }
   }
 }
+
 
 data "aws_ami" "ubuntu" {
   most_recent = true
